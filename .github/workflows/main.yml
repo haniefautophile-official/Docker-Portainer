@@ -55,11 +55,11 @@ services:
       - webnet
 
   sftp:
-    image: atmoz/sftp
+    image: linuxserver/openssh-server:latest
     container_name: sftp_server
     restart: always
     ports:
-      - "2222:22"
+      - "2222:2222"
     volumes:
       - ./web:/home/haniefautophile/upload
     command: username:password:1001
