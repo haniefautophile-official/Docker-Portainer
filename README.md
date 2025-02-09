@@ -65,3 +65,14 @@ docker-compose version
 arduino
 Salin kode
 http://192.168.1.100:9000
+
+
+<p>Jika anda ingin melanjutkan membuat web maka buat setruktur seperti contoh:</p>
+<p>mkdir -p ~/docker/web/minerproperty.my.id<br>
+mkdir -p ~/docker/web/haniefautophile.my.id<br>
+mkdir -p ~/docker/nginx/conf.d<br>
+mkdir -p ~/docker/certbot/www<br>
+mkdir -p ~/docker/certbot/conf<br>
+mkdir -p ~/docker/dbdata</p>
+
+<p>Ubah folder sesuai yang anda inginkan.</p>
