@@ -1,0 +1,81 @@
+#Ganti nama domain atau folder sesuai keinginan
+services:
+  web:
+    image: nginx:latest
+    container_name: nginx_web
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./web/minerproperty.my.id:/var/www/html/minerproperty.my.id
+      - ./web/haniefautophile.my.id:/var/www/html/haniefautophile.my.id
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+    depends_on:
+      - php
+    networks:
+      - webnet
+
+  php:
+    image: php:fpm
+    container_name: php_fpm
+    restart: always
+    volumes:
+      - ./web/minerproperty.my.id:/var/www/html/minerproperty.my.id
+      - ./web/haniefautophile.my.id:/var/www/html/haniefautophile.my.id
+    networks:
+      - webnet
+
+  db:
+    image: mariadb:latest
+    container_name: mariadb_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: haniefautophile
+      MYSQL_PASSWORD: N15450ftw4r3
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - webnet
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: rootpassword
+    networks:
+      - webnet
+
+  sftp:
+    image: atmoz/sftp
+    container_name: sftp_server
+    restart: always
+    ports:
+      - "2222:22"
+    volumes:
+      - ./web:/home/haniefautophile/upload
+    command: haniefautophile:N15450ftw4r3:1001
+    networks:
+      - webnet
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot_ssl
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'certbot certonly --webroot -w /var/www/certbot --force-renewal --email youremail@example.com --agree-tos --no-eff-email -d minerproperty.my.id -d haniefautophile.my.id'"
+  
+networks:
+  webnet:
+
+volumes:
+  dbdata:
