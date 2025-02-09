@@ -35,8 +35,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: mydatabase
-      MYSQL_USER: haniefautophile
-      MYSQL_PASSWORD: N15450ftw4r3
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
     volumes:
       - dbdata:/var/lib/mysql
     networks:
@@ -62,7 +62,7 @@ services:
       - "2222:22"
     volumes:
       - ./web:/home/haniefautophile/upload
-    command: haniefautophile:N15450ftw4r3:1001
+    command: username:password:1001
     networks:
       - webnet
 
